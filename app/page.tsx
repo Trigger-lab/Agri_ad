@@ -682,16 +682,16 @@ export default function HomePage() {
       </section>
 
       {/* Featured Partners Section - Horizontal Slider */}
-      <section className="py-24 relative overflow-hidden bg-[#0c1d17]">
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#eaf2ec] to-[#f4f8f5] border-y border-emerald-950/5">
         {/* Interactive 3D Quantum Neural Network Background */}
-        <QuantumNeuralNetwork className="opacity-60" />
+        <QuantumNeuralNetwork className="opacity-70" />
 
         <div className="container mx-auto px-4 relative z-10">
           <ScrollReveal className="text-center mb-12">
-            <h2 className="font-serif text-5xl md:text-7xl font-bold text-white mb-4 leading-none tracking-tighter uppercase">
-              OUR <span className="text-emerald-400 opacity-90">PARTNERS</span>
+            <h2 className="font-serif text-5xl md:text-7xl font-bold text-slate-900 mb-4 leading-none tracking-tighter uppercase">
+              OUR <span className="text-emerald-600 opacity-90">PARTNERS</span>
             </h2>
-            <p className="text-xl md:text-2xl font-serif text-slate-300 italic">
+            <p className="text-xl md:text-2xl font-serif text-emerald-800 italic">
               Trusted by Zimbabwe&apos;s Leading Agricultural Brands
             </p>
           </ScrollReveal>
@@ -718,7 +718,7 @@ export default function HomePage() {
                   className="flex-shrink-0 w-[300px]"
                 >
                   <motion.div 
-                    className="group relative overflow-hidden rounded-[2.5rem] bg-white shadow-lg border border-primary/10 h-[420px]"
+                    className="relative w-[300px] h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 group cursor-pointer"
                     whileHover={{ y: -8 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
@@ -767,8 +767,8 @@ export default function HomePage() {
             </div>
 
             {/* Gradient Overlays for smooth edges */}
-            <div className="absolute left-0 top-0 bottom-12 w-24 bg-gradient-to-r from-white/50 to-transparent pointer-events-none z-10" />
-            <div className="absolute right-0 top-0 bottom-12 w-24 bg-gradient-to-l from-white/50 to-transparent pointer-events-none z-10" />
+            <div className="absolute left-0 top-0 bottom-12 w-24 bg-gradient-to-r from-[#eaf2ec] to-transparent pointer-events-none z-10" />
+            <div className="absolute right-0 top-0 bottom-12 w-24 bg-gradient-to-l from-[#f4f8f5] to-transparent pointer-events-none z-10" />
           </div>
 
 

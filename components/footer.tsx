@@ -88,15 +88,18 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-background/70">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-secondary flex-shrink-0 mt-0.5" />
-                <span>14 Samora Machel Avenue, Harare, Zimbabwe</span>
+                <div>
+                  <p className="font-semibold text-white">Mediaserv Advertising</p>
+                  <p className="text-background/70 text-xs">40 St Athana Rd Bluffhill, Harare, Zimbabwe</p>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-secondary flex-shrink-0" />
-                <span>+263 242 123 456</span>
+                <span>+263772295191 / +263771416655</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-secondary flex-shrink-0" />
-                <span>hello@agri-ad.co.zw</span>
+                <span>hello@mediaserv.co.zw</span>
               </li>
             </ul>
           </ScrollReveal>

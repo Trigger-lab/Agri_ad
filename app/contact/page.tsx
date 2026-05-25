@@ -18,19 +18,19 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["14 Samora Machel Avenue", "Harare, Zimbabwe"],
+    details: ["Mediaserv Advertising", "40 St Athana Rd Bluffhill", "Harare, Zimbabwe"],
     color: "bg-primary/10 text-primary",
   },
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+263 788 402 106"],
+    details: ["+263772295191", "+263771416655"],
     color: "bg-emerald-100 text-emerald-700",
   },
   {
     icon: Mail,
     title: "Email Us",
-    details: ["hello@agri-ad.co.zw", "support@agri-ad.co.zw"],
+    details: ["hello@mediaserv.co.zw", "ads@mediaserv.co.zw"],
     color: "bg-secondary/10 text-secondary-foreground",
   },
   {
@@ -153,8 +153,8 @@ export default function ContactPage() {
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/20">
                   <MapPin className="h-10 w-10 text-primary" />
                 </div>
-                <p className="font-semibold text-foreground">14 Samora Machel Avenue</p>
-                <p className="text-sm text-muted-foreground">Harare, Zimbabwe</p>
+                <p className="font-semibold text-foreground">Mediaserv Advertising</p>
+                <p className="text-sm text-muted-foreground">40 St Athana Rd Bluffhill, Harare, Zimbabwe</p>
                 <Badge variant="outline" className="mt-3 border-primary/30 text-primary">Find us on Google Maps</Badge>
               </motion.div>
             </div>

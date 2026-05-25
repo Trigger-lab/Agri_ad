@@ -785,13 +785,13 @@ export default function AdvertisePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="rounded-full" asChild>
-                <Link href="mailto:ads@agri-ad.co.zw">
+                <Link href="mailto:ads@mediaserv.co.zw">
                   <Mail className="mr-2 h-5 w-5" />
                   Email Us
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="rounded-full" asChild>
-                <Link href="tel:+263242123456">
+                <Link href="tel:+263772295191">
                   <Phone className="mr-2 h-5 w-5" />
                   Call Us
                 </Link>

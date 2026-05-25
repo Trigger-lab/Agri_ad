@@ -789,7 +789,7 @@ export default function QuantumNeuralNetwork({ className }: QuantumNeuralNetwork
     const height = container.clientHeight || 600
 
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x0c1d17, 0.002)
+    scene.fog = new THREE.FogExp2(0xeaf2ec, 0.0035)
     sceneRef.current = scene
 
     const camera = new THREE.PerspectiveCamera(65, width / height, 0.1, 1000)
@@ -1073,130 +1073,48 @@ export default function QuantumNeuralNetwork({ className }: QuantumNeuralNetwork
         style={{
           backdropFilter: "blur(24px) saturate(120%)",
           WebkitBackdropFilter: "blur(24px) saturate(120%)",
-          background: "linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
-          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
+          background: "linear-gradient(145deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.25) 100%)",
+          border: "1px solid rgba(255, 255, 255, 0.4)",
+          boxShadow: "0 10px 30px rgba(15, 118, 110, 0.05)",
         }}
       >
         <div className="flex items-center justify-between mb-2">
           <h4
             id="instruction-title"
-            className="font-semibold text-lg bg-gradient-to-r from-white via-emerald-100 to-emerald-300 bg-clip-text text-transparent"
+            className="font-semibold text-lg bg-gradient-to-r from-emerald-800 to-emerald-600 bg-clip-text text-transparent"
           >
             Agri-Network Matrix
           </h4>
-          <Badge className="bg-emerald-500/20 text-emerald-300 border-none font-bold text-[9px] uppercase tracking-wider">
+          <Badge className="bg-emerald-600/10 text-emerald-700 border-none font-bold text-[9px] uppercase tracking-wider">
             Active
           </Badge>
         </div>
-        <p className="instruction-text text-xs leading-relaxed text-slate-400 font-light">
+        <p className="instruction-text text-xs leading-relaxed text-emerald-950 font-medium">
           Click the space to transmit energy pulses. <br />
           Drag anywhere in the background to orbit and explore.
         </p>
       </div>
 
-      {/* Glass Panel overlay: Theme Selector */}
-      <div
-        id="theme-selector"
-        className="glass-panel absolute z-20 top-8 right-8 w-[240px] p-6 text-left rounded-3xl flex flex-col gap-4"
-        style={{
-          backdropFilter: "blur(24px) saturate(120%)",
-          WebkitBackdropFilter: "blur(24px) saturate(120%)",
-          background: "linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
-          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
-        }}
-      >
-        <div>
-          <div id="theme-selector-title" className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-2">
-            Visual Grid Theme
-          </div>
-          <div className="theme-grid grid grid-cols-3 gap-3 justify-items-center">
-            <button
-              onClick={() => handleThemeChange(0)}
-              className={`theme-button w-10 h-10 rounded-full border-none cursor-pointer transition-all duration-300 relative ${
-                activePaletteIndex === 0 ? "scale-110 active-theme-btn" : "opacity-75 hover:opacity-100"
-              }`}
-              style={{
-                background: "radial-gradient(circle at 30% 30%, #34d399, #065f46)",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-              }}
-              aria-label="Agri Emerald"
-            >
-              {activePaletteIndex === 0 && (
-                <div className="absolute inset-[-4px] rounded-full border-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
-              )}
-            </button>
-            <button
-              onClick={() => handleThemeChange(1)}
-              className={`theme-button w-10 h-10 rounded-full border-none cursor-pointer transition-all duration-300 relative ${
-                activePaletteIndex === 1 ? "scale-110 active-theme-btn" : "opacity-75 hover:opacity-100"
-              }`}
-              style={{
-                background: "radial-gradient(circle at 30% 30%, #a78bfa, #4c1d95)",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-              }}
-              aria-label="Purple Nebula"
-            >
-              {activePaletteIndex === 1 && (
-                <div className="absolute inset-[-4px] rounded-full border-2 border-violet-400 shadow-[0_0_10px_rgba(167,139,250,0.5)]" />
-              )}
-            </button>
-            <button
-              onClick={() => handleThemeChange(2)}
-              className={`theme-button w-10 h-10 rounded-full border-none cursor-pointer transition-all duration-300 relative ${
-                activePaletteIndex === 2 ? "scale-110 active-theme-btn" : "opacity-75 hover:opacity-100"
-              }`}
-              style={{
-                background: "radial-gradient(circle at 30% 30%, #38bdf8, #0c4a6e)",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-              }}
-              aria-label="Ocean Aurora"
-            >
-              {activePaletteIndex === 2 && (
-                <div className="absolute inset-[-4px] rounded-full border-2 border-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.5)]" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        <div id="density-controls" className="flex flex-col gap-2">
-          <div className="density-label flex justify-between items-center text-xs text-slate-400 font-light">
-            <span>Node Density</span>
-            <span className="text-emerald-400 font-semibold">{Math.round(densityFactor * 100)}%</span>
-          </div>
-          <input
-            type="range"
-            min="30"
-            max="100"
-            value={densityFactor * 100}
-            onChange={(e) => handleDensityChange(parseInt(e.target.value))}
-            className="density-slider w-full h-[6px] rounded-lg outline-none cursor-pointer accent-emerald-500 bg-white/10"
-            aria-label="Network Density"
-          />
-        </div>
-      </div>
-
-      {/* Control Buttons overlay */}
+      {/* Control Buttons overlay - Hidden on mobile, light glassmorphism on desktop */}
       <div
         id="control-buttons"
-        className="absolute z-20 bottom-8 left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-4 p-2 bg-black/30 rounded-[2rem] backdrop-blur-md border border-white/5"
+        className="absolute z-20 bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex items-center justify-center gap-4 p-2 bg-white/45 backdrop-blur-lg border border-white/40 shadow-xl rounded-[2rem]"
       >
         <button
           onClick={handleMorph}
-          className="px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-emerald-500/20 hover:border-emerald-500/30 transition-all font-serif text-xs font-semibold tracking-wider uppercase"
+          className="px-6 py-2.5 rounded-full border border-emerald-900/10 bg-white/40 text-emerald-900 hover:text-white hover:bg-emerald-600 hover:border-emerald-600 transition-all font-serif text-xs font-semibold tracking-wider uppercase shadow-sm"
         >
           Morph
         </button>
         <button
           onClick={handleFreeze}
-          className="px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-emerald-500/20 hover:border-emerald-500/30 transition-all font-serif text-xs font-semibold tracking-wider uppercase"
+          className="px-6 py-2.5 rounded-full border border-emerald-900/10 bg-white/40 text-emerald-900 hover:text-white hover:bg-emerald-600 hover:border-emerald-600 transition-all font-serif text-xs font-semibold tracking-wider uppercase shadow-sm"
         >
           {paused ? "Resume" : "Freeze"}
         </button>
         <button
           onClick={handleReset}
-          className="px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-emerald-500/20 hover:border-emerald-500/30 transition-all font-serif text-xs font-semibold tracking-wider uppercase"
+          className="px-6 py-2.5 rounded-full border border-emerald-900/10 bg-white/40 text-emerald-900 hover:text-white hover:bg-emerald-600 hover:border-emerald-600 transition-all font-serif text-xs font-semibold tracking-wider uppercase shadow-sm"
         >
           Reset
         </button>
