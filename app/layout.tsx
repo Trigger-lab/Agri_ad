@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { PageLoader } from '@/components/page-loader'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Agri-Ad Zimbabwe | Digital Farming Magazine & Marketplace',
@@ -33,11 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background" suppressHydrationWarning>
       <body className="font-sans antialiased min-h-screen" suppressHydrationWarning>
-        <PageLoader />
+        <Suspense fallback={null}>
+          <PageLoader />
+        </Suspense>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
 }
+
 
