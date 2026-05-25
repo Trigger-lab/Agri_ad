@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -13,6 +13,7 @@ import { AnimatedText, ScrollReveal } from "@/components/animated-text"
 import { AIAssistant } from "@/components/ai-assistant"
 import { ArticleCard } from "@/components/article-card"
 import { IssueReader } from "@/components/issue-reader"
+import { useSearchParams } from "next/navigation"
 
 const magazineIssues = [
   {
@@ -83,10 +84,16 @@ const featuredArticles = [
   },
 ]
 
-export default function MagazinePage() {
+function MagazineContent() {
+  const searchParams = useSearchParams()
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [isReaderOpen, setIsReaderOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "")
+
+  useEffect(() => {
+    const q = searchParams.get("q")
+    if (q) setSearchQuery(q)
+  }, [searchParams])
 
   const filteredArticles = featuredArticles.filter(art => 
     (selectedCategory === "All" || art.category === selectedCategory) &&
@@ -95,15 +102,23 @@ export default function MagazinePage() {
   )
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen" style={{ background: "linear-gradient(160deg, oklch(0.96 0.015 140) 0%, oklch(0.98 0.005 120) 50%, oklch(0.97 0.012 100) 100%)" }}>
       <Header />
 
-      {/* Hero with Glassmorphic Search */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -mr-48 -mt-48" />
+      <section id="latest" className="pt-32 pb-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 z-0" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -mr-48 -mt-48 z-0" />
         
-        <div className="container mx-auto px-4 relative z-10">
+        {/* Animated Clouds Background */}
+        <div id="clouds" className="absolute inset-0 pointer-events-none overflow-hidden z-10">
+          <div className="cloud x1"></div>
+          <div className="cloud x2"></div>
+          <div className="cloud x3"></div>
+          <div className="cloud x4"></div>
+          <div className="cloud x5"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-20">
           <ScrollReveal className="text-center max-w-4xl mx-auto">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -121,7 +136,7 @@ export default function MagazinePage() {
               Access Zimbabwe&apos;s most comprehensive repository of agricultural wisdom, technical guides, and market intelligence.
             </p>
 
-            <div className="relative max-w-2xl mx-auto">
+            <form onSubmit={(e) => e.preventDefault()} className="relative max-w-2xl mx-auto">
               <div className="absolute inset-0 bg-white shadow-2xl rounded-full blur-xl opacity-20" />
               <div className="relative flex items-center bg-card/80 backdrop-blur-xl border border-white/20 rounded-full p-2 shadow-xl">
                 <Search className="ml-4 h-5 w-5 text-muted-foreground" />
@@ -131,11 +146,11 @@ export default function MagazinePage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <Button className="rounded-full px-8 h-12 text-sm font-bold shadow-lg transition-all hover:scale-105 active:scale-95">
+                <Button type="submit" className="rounded-full px-8 h-12 text-sm font-bold shadow-lg transition-all hover:scale-105 active:scale-95">
                   Search
                 </Button>
               </div>
-            </div>
+            </form>
           </ScrollReveal>
         </div>
       </section>
@@ -208,7 +223,9 @@ export default function MagazinePage() {
       </section>
 
       {/* The Knowledge Hub - Filterable Articles */}
-      <section className="py-24 bg-card/30 border-y border-border/50 relative overflow-hidden">
+      <section id="articles" className="py-24 border-y border-border/50 relative overflow-hidden backdrop-blur-sm" style={{ background: "linear-gradient(160deg, rgba(34,120,60,0.04) 0%, rgba(255,255,255,0.6) 50%, rgba(180,140,30,0.03) 100%)" }}>
+        {/* Background Accent Blur */}
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1h98v98H1z' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")`,
@@ -316,5 +333,17 @@ export default function MagazinePage() {
       <Footer />
       <AIAssistant />
     </main>
+  )
+}
+
+export default function MagazinePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(160deg, oklch(0.96 0.015 140) 0%, oklch(0.98 0.005 120) 50%, oklch(0.97 0.012 100) 100%)" }}>
+        <div className="text-muted-foreground animate-pulse font-serif text-lg">Loading Magazine...</div>
+      </div>
+    }>
+      <MagazineContent />
+    </Suspense>
   )
 }

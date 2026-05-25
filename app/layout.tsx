@@ -1,17 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
-
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter'
-})
-
-const playfair = Playfair_Display({ 
-  subsets: ["latin"],
-  variable: '--font-playfair'
-})
+import { PageLoader } from '@/components/page-loader'
 
 export const metadata: Metadata = {
   title: 'Agri-Ad Zimbabwe | Digital Farming Magazine & Marketplace',
@@ -41,11 +31,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} bg-background`} suppressHydrationWarning>
+    <html lang="en" className="bg-background" suppressHydrationWarning>
       <body className="font-sans antialiased min-h-screen" suppressHydrationWarning>
+        <PageLoader />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
 }
+

@@ -8,7 +8,6 @@ import {
   ArrowRight,
   Tractor,
   Wheat,
-  Milk,
   Droplets,
   ChevronDown,
   Leaf,
@@ -23,6 +22,11 @@ import {
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Separator } from "@/components/ui/separator"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Header } from "@/components/header"
 import { AdCard } from "@/components/ad-card"
 import { VideoSection } from "@/components/video-section"
@@ -32,6 +36,12 @@ import { AnimatedText, ScrollReveal } from "@/components/animated-text"
 import { SeedReveal, TractorReveal } from "@/components/seed-reveal"
 import { AIAssistant } from "@/components/ai-assistant"
 import { ContextualAdPopup } from "@/components/contextual-ad-popup"
+import dynamic from "next/dynamic"
+
+const QuantumNeuralNetwork = dynamic(
+  () => import("@/components/quantum-neural-network"),
+  { ssr: false }
+)
 
 const featuredAds = [
   {
@@ -79,7 +89,7 @@ const farmingTips = [
     className: "col-start-1 row-start-1 md:col-span-2 md:row-span-2",
   },
   {
-    icon: Milk,
+    icon: Wheat,
     title: "Dairy Farming",
     description: "Modern dairy techniques, herd management, and milk production optimization strategies.",
     image: "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?w=800&h=800&fit=crop",
@@ -115,83 +125,175 @@ const farmingTips = [
   },
 ]
 
+const agriVariables = [
+  { text: "yield = crop * rain", size: "text-[11px] md:text-[13px]", top: "8%", left: "5%", duration: 18 },
+  { text: "pH > 6.5", size: "text-[12px] md:text-[14px]", top: "25%", left: "82%", duration: 14 },
+  { text: "N:P:K = 15:15:15", size: "text-[10px] md:text-[12px]", top: "72%", left: "10%", duration: 22 },
+  { text: "temp <= 30°C", size: "text-[12px] md:text-[14px]", top: "15%", left: "75%", duration: 16 },
+  { text: "ROI = CTR / CPC", size: "text-[11px] md:text-[13px]", top: "88%", left: "80%", duration: 20 },
+  { text: "H2O + CO2 => glucose + O2", size: "text-[10px] md:text-[12px]", top: "45%", left: "4%", duration: 25 },
+  { text: "cpc_value", size: "text-[11px] md:text-[13px]", top: "58%", left: "88%", duration: 17 },
+  { text: "organic_matter >= 3%", size: "text-[11px] md:text-[13px]", top: "38%", left: "48%", duration: 21 },
+  { text: "moisture = 65%", size: "text-[11px] md:text-[12px]", top: "84%", left: "38%", duration: 19 },
+  { text: "CTR = clicks / impressions", size: "text-[10px] md:text-[12px]", top: "20%", left: "40%", duration: 23 },
+]
+
 const partners = [
   {
-    name: "SeedCo",
-    tagline: "Seeds of Success",
-    description: "Empowering farmers with high-yielding, climate-smart seed varieties. Leading the way in African seed research.",
-    image: "https://tse1.mm.bing.net/th/id/OIP.qBqPwS1fjRV4M9K9-zWFlgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    icon: Wheat,
+    name: "Tobacco Research Board",
+    tagline: "Kutsaga — Advancing Tobacco Science",
+    description: "Leading tobacco research institution in Zimbabwe, driving innovation in variety development, crop protection, and tobacco quality improvement.",
+    image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&q=80",
+    icon: Leaf,
+    color: "bg-emerald-700",
+  },
+  {
+    name: "TIMB",
+    tagline: "Tobacco Industry & Marketing Board",
+    description: "Regulating and promoting Zimbabwe's tobacco industry through oversight of production, curing standards, and fair auction marketing systems.",
+    image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&q=80",
+    icon: TrendingUp,
+    color: "bg-primary",
+  },
+  {
+    name: "Zimbabwe Tobacco Association",
+    tagline: "Championing Growers' Interests",
+    description: "Representing tobacco growers across Zimbabwe, advocating for fair pricing, sustainable practices, and a prosperous future for the industry.",
+    image: "https://tse3.mm.bing.net/th/id/OIP.IYy57xQaD3VIt-DRNCRqkgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
+    icon: Users,
     color: "bg-emerald-600",
   },
   {
-    name: "Drip Tech",
-    tagline: "Smart Irrigation",
-    description: "Specializing in advanced irrigation technology, providing Zimbabwean farmers with precision water management solutions for every scale.",
-    image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&q=80",
-    icon: Droplets,
+    name: "ADMA",
+    tagline: "Agricultural Dealers & Manufacturers",
+    description: "Uniting dealers and manufacturers of agricultural inputs and equipment to support the growth and modernisation of Zimbabwean agriculture.",
+    image: "https://tse2.mm.bing.net/th/id/OIP.-GhwJ7UiQuVTIRWm_5oouwHaGP?rs=1&pid=ImgDetMain&o=7&rm=3",
+    icon: Tractor,
+    color: "bg-orange-600",
+  },
+  {
+    name: "Corporate 24",
+    tagline: "Healthcare for Every Farmer",
+    description: "Zimbabwe's trusted health insurance and medical aid provider, ensuring farmers and agri-business employees access quality healthcare.",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80",
+    icon: Award,
     color: "bg-blue-600",
   },
   {
-    name: "Tobacco Today",
-    tagline: "Premium Leaf",
-    description: "Zimbabwe's leading authority on tobacco production, providing expert insights, curing techniques, and auction analysis.",
-    image: "https://tse3.mm.bing.net/th/id/OIP.IYy57xQaD3VIt-DRNCRqkgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-    icon: Leaf,
-    color: "bg-secondary",
-  },
-  {
-    name: "ProFeeds",
-    tagline: "Quality Nutrition",
-    description: "High-performance animal nutrition solutions that ensure your livestock reaches its full potential through scientifically formulated feeds.",
-    image: "https://tse4.mm.bing.net/th/id/OIP.Q7YKmD8iepuwQbjN-n-7sgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
+    name: "Frecon Solar",
+    tagline: "Powering Agriculture Sustainably",
+    description: "Delivering reliable solar energy solutions to farms and agri-businesses across Zimbabwe, reducing costs and ensuring energy independence.",
+    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80",
     icon: Sparkles,
-    color: "bg-orange-500",
+    color: "bg-yellow-500",
   },
   {
-    name: "Irvines Farm Equipment",
-    tagline: "John Deere 5E Series Now Available",
-    description: "Finance options available. Trade-in your old tractor today.",
-    image: "https://tse2.mm.bing.net/th/id/OIP.-GhwJ7UiQuVTIRWm_5oouwHaGP?rs=1&pid=ImgDetMain&o=7&rm=3",
+    name: "Amcotts",
+    tagline: "Cotton Industry Leaders",
+    description: "A cornerstone of Zimbabwe's cotton sector, providing contract farming support, inputs financing, and lint marketing services.",
+    image: "https://static.vecteezy.com/system/resources/thumbnails/037/995/719/small_2x/ai-generated-cotton-flower-branch-on-nature-photo.jpg",
+    icon: Sprout,
+    color: "bg-emerald-600",
+  },
+  {
+    name: "LoadAgropower",
+    tagline: "Mechanised Farm Power",
+    description: "Supplying powerful agricultural machinery, tractors, and implements to boost productivity across commercial and smallholder farms.",
+    image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&q=80",
     icon: Tractor,
     color: "bg-primary",
   },
   {
-    name: "Cottco",
-    tagline: "Cotton Excellence",
-    description: "Empowering communities through sustainable cotton production and providing world-class marketing and processing services.",
-    image: "https://static.vecteezy.com/system/resources/thumbnails/037/995/719/small_2x/ai-generated-cotton-flower-branch-on-nature-photo.jpg",
-    icon: Sprout,
+    name: "Feedmix",
+    tagline: "Quality Animal Nutrition",
+    description: "Formulating scientifically balanced feeds for livestock and poultry, helping farmers maximise animal health, growth, and output.",
+    image: "https://tse4.mm.bing.net/th/id/OIP.Q7YKmD8iepuwQbjN-n-7sgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
+    icon: Wheat,
+    color: "bg-orange-500",
+  },
+  {
+    name: "FSG",
+    tagline: "Farm & Supply Group",
+    description: "A leading agri-supply group providing seeds, chemicals, fertilisers, and farm management expertise to Zimbabwean producers.",
+    image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=800&q=80",
+    icon: Leaf,
     color: "bg-emerald-700",
   },
   {
-    name: "ZimDairy",
-    tagline: "Dairy Solutions",
-    description: "Leading the modernization of the dairy sector with high-quality equipment, herd management software, and processing solutions.",
-    image: "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?w=800&q=80",
-    icon: Milk,
-    color: "bg-blue-400",
+    name: "SeedCo",
+    tagline: "Seeds of Success",
+    description: "Empowering farmers with high-yielding, climate-smart seed varieties. Leading the way in African seed research and crop improvement.",
+    image: "https://tse1.mm.bing.net/th/id/OIP.qBqPwS1fjRV4M9K9-zWFlgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+    icon: Sprout,
+    color: "bg-emerald-600",
   },
   {
-    name: "Agritex Solutions",
-    tagline: "Center Pivot Irrigation Systems",
-    description: "Modernizing Zimbabwe's water management with high-efficiency center pivot and irrigation technologies.",
-    image: "https://th.bing.com/th/id/R.72e10e5824440da553b51531740a0831?rik=rIpd6f2Mobtprw&riu=http%3a%2f%2fwww.pumpindustry.com.au%2fwp-content%2fuploads%2f2020%2f10%2fshutterstock_1018280029-e1602215828674.jpg&ehk=4h38PHHj3389%2fDQ5g368A8wUvAkgdpZ28c58riWVWS0%3d&risl=&pid=ImgRaw&r=0",
+    name: "CP Chemicals",
+    tagline: "Crop Protection Specialists",
+    description: "Supplying premium agrochemicals, herbicides, pesticides, and fertilisers to protect and enhance crop yields across Zimbabwe.",
+    image: "https://images.unsplash.com/photo-1592921870789-04563d55041c?w=800&q=80",
     icon: Droplets,
-    color: "bg-primary/80",
+    color: "bg-blue-700",
   },
 ]
 
-const stats = [
-  { value: "15K+", label: "Active Farmers", icon: Users },
-  { value: "500+", label: "Suppliers", icon: TrendingUp },
-  { value: "98%", label: "Satisfaction", icon: Award },
-]
+
 
 export default function HomePage() {
   const [isPaused, setIsPaused] = useState(false)
   const [mounted, setMounted] = useState(false)
   const heroRef = useRef(null)
+
+  // Drag-to-scroll and auto-scroll for Partners Section
+  const sliderRef = useRef<HTMLDivElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const slider = sliderRef.current
+    if (!slider) return
+    setIsDragging(true)
+    setIsPaused(true)
+    setStartX(e.pageX - slider.offsetLeft)
+    setScrollLeft(slider.scrollLeft)
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    e.preventDefault()
+    const slider = sliderRef.current
+    if (!slider) return
+    const x = e.pageX - slider.offsetLeft
+    const walk = (x - startX) * 1.5 // Drag speed multiplier
+    slider.scrollLeft = scrollLeft - walk
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+    setIsPaused(false)
+  }
+
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    let animationFrameId: number
+
+    const step = () => {
+      if (!isPaused && !isDragging) {
+        slider.scrollLeft += 1.2 // Auto scroll speed
+        // If we scrolled past half the container width, wrap around to 0
+        if (slider.scrollLeft >= slider.scrollWidth / 2) {
+          slider.scrollLeft = 0
+        }
+      }
+      animationFrameId = requestAnimationFrame(step)
+    }
+
+    animationFrameId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [isPaused, isDragging])
 
   useEffect(() => {
     setMounted(true)
@@ -209,7 +311,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="hero" ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image with Parallax */}
         <motion.div className="absolute inset-0" style={{ y: heroY }}>
           <Image
@@ -319,32 +421,7 @@ export default function HomePage() {
               </Button>
             </motion.div>
 
-            {/* Stats */}
-            <motion.div
-              className="flex flex-wrap justify-center gap-4 md:gap-6 mt-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.6 }}
-            >
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  className="flex items-center gap-3 px-6 py-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="p-2 bg-secondary/30 rounded-lg">
-                    <stat.icon className="h-5 w-5 text-secondary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="block text-2xl font-bold text-white">{stat.value}</span>
-                    <span className="text-xs text-white/70">{stat.label}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+
           </div>
         </motion.div>
 
@@ -376,34 +453,99 @@ export default function HomePage() {
               filter: "blur(20px)",
             }}
           />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(34,120,60,0.06) 0%, transparent 50%, rgba(180,140,30,0.04) 100%)" }} />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <ScrollReveal className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-secondary/20 text-secondary-foreground rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+            <Badge variant="outline" className="mb-4 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider border-secondary/40 text-secondary bg-secondary/5">
               Featured Partners
-            </span>
+            </Badge>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
               <AnimatedText text="Marketplace Spotlight" type="wave" />
             </h2>
+            <Separator className="my-4 max-w-[80px] mx-auto bg-primary/30" />
             <p className="text-muted-foreground text-base max-w-xl mx-auto">
               Discover premium agricultural products, equipment, and services from Zimbabwe&apos;s trusted suppliers.
             </p>
           </ScrollReveal>
 
-          <SeedReveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredAds.map((ad, index) => (
-                <AdCard
-                  key={index}
-                  {...ad}
-                  size={index < 2 ? "large" : "medium"}
-                />
-              ))}
-            </div>
-          </SeedReveal>
+          <Tabs defaultValue="all" className="mb-8">
+            <TabsList className="mx-auto flex w-fit rounded-full bg-muted">
+              <TabsTrigger value="all" className="rounded-full text-xs font-semibold">All Products</TabsTrigger>
+              <TabsTrigger value="seeds" className="rounded-full text-xs font-semibold">Seeds</TabsTrigger>
+              <TabsTrigger value="equipment" className="rounded-full text-xs font-semibold">Equipment</TabsTrigger>
+              <TabsTrigger value="feeds" className="rounded-full text-xs font-semibold">Feeds</TabsTrigger>
+            </TabsList>
+            <TabsContent value="all">
+              <SeedReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {featuredAds.map((ad, index) => (
+                    <AdCard key={index} {...ad} size={index < 2 ? "large" : "medium"} />
+                  ))}
+                </div>
+              </SeedReveal>
+            </TabsContent>
+            <TabsContent value="seeds">
+              <SeedReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {featuredAds.filter(a => a.category?.toLowerCase().includes("seed")).map((ad, index) => (
+                    <AdCard key={index} {...ad} size="large" />
+                  ))}
+                  {featuredAds.filter(a => a.category?.toLowerCase().includes("seed")).length === 0 && (
+                    <Card className="col-span-4 text-center py-12">
+                      <CardContent>
+                        <p className="text-muted-foreground">Browse our directory for seed listings.</p>
+                        <Button variant="outline" size="sm" className="mt-4 rounded-full" asChild>
+                          <Link href="/directory">View Directory <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </SeedReveal>
+            </TabsContent>
+            <TabsContent value="equipment">
+              <SeedReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {featuredAds.filter(a => a.category?.toLowerCase().includes("machin")).map((ad, index) => (
+                    <AdCard key={index} {...ad} size="large" />
+                  ))}
+                  {featuredAds.filter(a => a.category?.toLowerCase().includes("machin")).length === 0 && (
+                    <Card className="col-span-4 text-center py-12">
+                      <CardContent>
+                        <p className="text-muted-foreground">Browse our directory for equipment listings.</p>
+                        <Button variant="outline" size="sm" className="mt-4 rounded-full" asChild>
+                          <Link href="/directory">View Directory <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </SeedReveal>
+            </TabsContent>
+            <TabsContent value="feeds">
+              <SeedReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {featuredAds.filter(a => a.category?.toLowerCase().includes("nutri")).map((ad, index) => (
+                    <AdCard key={index} {...ad} size="large" />
+                  ))}
+                  {featuredAds.filter(a => a.category?.toLowerCase().includes("nutri")).length === 0 && (
+                    <Card className="col-span-4 text-center py-12">
+                      <CardContent>
+                        <p className="text-muted-foreground">Browse our directory for feed listings.</p>
+                        <Button variant="outline" size="sm" className="mt-4 rounded-full" asChild>
+                          <Link href="/directory">View Directory <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </SeedReveal>
+            </TabsContent>
+          </Tabs>
 
-          <ScrollReveal className="text-center mt-10">
+          <ScrollReveal className="text-center mt-4">
             <Button variant="outline" size="lg" className="rounded-full" asChild>
               <Link href="/directory">
                 View All Listings
@@ -433,6 +575,31 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary/20 backdrop-blur-[100px] backdrop-saturate-[200%]" />
           <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900/20 via-transparent to-primary/10" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/90" />
+
+          {/* Drifting Agricultural and Ad Variables in Background */}
+          {agriVariables.map((v, i) => (
+            <motion.span
+              key={i}
+              className={`absolute font-mono font-bold select-none ${v.size} pointer-events-none z-0`}
+              style={{
+                top: v.top,
+                left: v.left,
+                color: i % 2 === 0 ? "rgba(110, 231, 183, 0.2)" : "rgba(253, 224, 71, 0.18)",
+              }}
+              animate={{
+                y: [0, -25, 0],
+                x: [0, 15, 0],
+                opacity: [0.2, 0.6, 0.2],
+              }}
+              transition={{
+                duration: v.duration,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              {v.text}
+            </motion.span>
+          ))}
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -442,25 +609,12 @@ export default function HomePage() {
             </h2>
           </ScrollReveal>
 
-          <div className="relative h-auto md:h-[900px] w-full mt-12 grid grid-cols-1 md:block gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 lg:gap-20 max-w-7xl mx-auto mt-12">
             {farmingTips.map((tip, index) => {
-              // Strategic Positioning based on Reference Image - Improved for responsiveness
-              const positions = [
-                "md:absolute md:top-[15%] md:left-[5%] md:w-[420px] md:h-[420px] z-20", // Tobacco
-                "md:absolute md:top-0 md:left-[42%] md:w-[380px] md:h-[380px] z-30",   // Dairy
-                "md:absolute md:top-0 md:right-[5%] md:w-[300px] md:h-[300px] z-10",   // Irrigation
-                "md:absolute md:top-[45%] md:left-[-2%] md:w-[330px] md:h-[330px] z-10", // Mechanization
-                "md:absolute md:top-[48%] md:left-[30%] md:w-[380px] md:h-[380px] z-20", // Maize
-                "md:absolute md:top-[45%] md:right-[2%] md:w-[360px] md:h-[360px] z-30", // Cotton
-              ]
-
               return (
                 <motion.div
                   key={index}
-                  className={cn(
-                    "relative group h-[400px] md:h-auto",
-                    positions[index] || ""
-                  )}
+                  className="relative group w-full aspect-square max-w-[360px] mx-auto"
                   initial={{ opacity: 0, scale: 0.9, y: 20 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -528,91 +682,88 @@ export default function HomePage() {
       </section>
 
       {/* Featured Partners Section - Horizontal Slider */}
-      <section className="py-24 relative overflow-hidden bg-white/50 backdrop-blur-3xl">
-        {/* Background Accents */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <div className="absolute top-1/4 left-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[100px]" />
-        </div>
+      <section className="py-24 relative overflow-hidden bg-[#0c1d17]">
+        {/* Interactive 3D Quantum Neural Network Background */}
+        <QuantumNeuralNetwork className="opacity-60" />
 
         <div className="container mx-auto px-4 relative z-10">
           <ScrollReveal className="text-center mb-12">
-            <h2 className="font-serif text-5xl md:text-7xl font-bold text-foreground mb-4 leading-none tracking-tighter uppercase">
-              OUR <span className="text-secondary opacity-80">PARTNERS</span>
+            <h2 className="font-serif text-5xl md:text-7xl font-bold text-white mb-4 leading-none tracking-tighter uppercase">
+              OUR <span className="text-emerald-400 opacity-90">PARTNERS</span>
             </h2>
-            <p className="text-xl md:text-2xl font-serif text-muted-foreground italic">
+            <p className="text-xl md:text-2xl font-serif text-slate-300 italic">
               Trusted by Zimbabwe&apos;s Leading Agricultural Brands
             </p>
           </ScrollReveal>
 
           {/* Auto-Sliding/Draggable Container */}
           <div 
-            className="relative cursor-grab active:cursor-grabbing"
+            ref={sliderRef}
+            className="relative overflow-x-auto scrollbar-none pb-12 cursor-grab active:cursor-grabbing select-none"
+            style={{ WebkitOverflowScrolling: "touch" }}
             onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+            onMouseLeave={() => {
+              setIsPaused(false)
+              setIsDragging(false)
+            }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
           >
-            <div className="flex gap-6 md:gap-8 overflow-hidden pb-12">
-              <motion.div 
-                className="flex gap-6 md:gap-8"
-                animate={isPaused ? {} : { x: [0, -2800] }}
-                transition={{
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 50,
-                    ease: "linear",
-                  },
-                }}
-              >
-                {/* Quadruple the partners for seamless loop */}
-                {[...partners, ...partners, ...partners, ...partners].map((partner, index) => (
-                  <div 
-                    key={index} 
-                    className="flex-shrink-0 w-[280px] sm:w-[350px]"
+            <div className="flex gap-6 md:gap-8 w-max">
+              {/* Quadruple the partners for seamless loop */}
+              {[...partners, ...partners, ...partners, ...partners].map((partner, index) => (
+                <div 
+                  key={index} 
+                  className="flex-shrink-0 w-[300px]"
+                >
+                  <motion.div 
+                    className="group relative overflow-hidden rounded-[2.5rem] bg-white shadow-lg border border-primary/10 h-[420px]"
+                    whileHover={{ y: -8 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
-                    <motion.div 
-                      className="group relative overflow-hidden rounded-[2.5rem] bg-white shadow-lg border border-primary/10 h-[400px] md:h-[450px]"
-                      whileHover={{ y: -8 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    >
-                      <Image 
-                        src={partner.image}
-                        alt={partner.name}
-                        fill
-                        className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-95"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:via-black/20" />
+                    <Image 
+                      src={partner.image}
+                      alt={partner.name}
+                      fill
+                      className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-95 pointer-events-none"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:via-black/20" />
+                    
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                      <div className="mb-2">
+                        <Badge className={`${partner.color} text-white px-3 py-0.5 text-[10px] border-none shadow-lg tracking-wide uppercase font-bold`}>
+                          {partner.tagline}
+                        </Badge>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-3 leading-tight">
+                        {partner.name}
+                      </h3>
                       
-                      {/* Content Overlay */}
-                      <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                        <div className="mb-2">
-                          <Badge className={`${partner.color} text-white px-3 py-0.5 text-[10px] border-none shadow-lg tracking-wide uppercase font-bold`}>
-                            {partner.tagline}
-                          </Badge>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-3 leading-tight">
-                          {partner.name}
-                        </h3>
-                        
-                        <div className="p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl mb-6 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                          <p className="text-white text-xs leading-relaxed font-medium line-clamp-3">
-                            {partner.description}
-                          </p>
-                        </div>
+                      <div className="p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl mb-6 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                        <p className="text-white text-xs leading-relaxed font-medium line-clamp-3">
+                          {partner.description}
+                        </p>
+                      </div>
 
-                        <div className="flex gap-3 items-center">
-                          <Button className={`${partner.color} hover:brightness-110 text-white rounded-full px-5 h-9 text-xs font-bold shadow-xl transition-all`}>
+                      <div className="flex gap-3 items-center">
+                        <Button 
+                          className={`${partner.color} hover:brightness-110 text-white rounded-full px-5 h-9 text-xs font-bold shadow-xl transition-all`}
+                          asChild
+                        >
+                          <Link href={`/directory?q=${encodeURIComponent(partner.name)}`}>
                             View More
-                          </Button>
-                          <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white">
-                            <partner.icon className="h-4 w-4" />
-                          </div>
+                          </Link>
+                        </Button>
+                        <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white">
+                          <partner.icon className="h-4 w-4" />
                         </div>
                       </div>
-                    </motion.div>
-                  </div>
-                ))}
-              </motion.div>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
             </div>
 
             {/* Gradient Overlays for smooth edges */}
@@ -620,26 +771,17 @@ export default function HomePage() {
             <div className="absolute right-0 top-0 bottom-12 w-24 bg-gradient-to-l from-white/50 to-transparent pointer-events-none z-10" />
           </div>
 
-          {/* Partner Stats - Compact for Slider View */}
-          <div className="flex flex-wrap justify-center gap-12 md:gap-24 mt-20 border-t border-primary/5 pt-12">
-            <div className="text-center">
-              <span className="block text-4xl md:text-5xl font-sans font-black text-primary mb-1">50+</span>
-              <span className="text-muted-foreground font-serif italic text-sm md:text-base">Brands</span>
-            </div>
-            <div className="text-center">
-              <span className="block text-4xl md:text-5xl font-sans font-black text-secondary mb-1">15K+</span>
-              <span className="text-muted-foreground font-serif italic text-sm md:text-base">Farmers</span>
-            </div>
-            <div className="text-center">
-              <span className="block text-4xl md:text-5xl font-sans font-black text-primary mb-1">100+</span>
-              <span className="text-muted-foreground font-serif italic text-sm md:text-base">Products</span>
-            </div>
-          </div>
+
         </div>
       </section>
 
       {/* Agricultural Manifesto Scroll Section */}
-      <section className="py-32 relative overflow-hidden bg-background">
+      <section className="py-32 relative overflow-hidden" style={{ background: "linear-gradient(180deg, oklch(0.97 0.012 130) 0%, oklch(0.98 0.005 120) 100%)" }}>
+        {/* Decorative Background Blurs */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(34,120,60,0.05) 0%, transparent 70%)" }} />
+          <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full" style={{ background: "radial-gradient(circle, rgba(180,140,30,0.04) 0%, transparent 70%)" }} />
+        </div>
         {/* Subtle Background Texture */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 86c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm66 3c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm-46-43c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm58 33c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zM79 7c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-54 2c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zM27 44c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1z' fill='%23166534' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
@@ -780,15 +922,16 @@ export default function HomePage() {
       </section>
 
       {/* Additional Ads Grid */}
-      <section className="py-20">
+      <section className="py-20 relative" style={{ background: "linear-gradient(160deg, rgba(34,120,60,0.03) 0%, oklch(0.98 0.005 120) 50%, rgba(180,140,30,0.03) 100%)" }}>
         <div className="container mx-auto px-4">
           <ScrollReveal className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-accent/20 text-accent rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+            <Badge className="mb-3 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider bg-accent text-accent-foreground">
               Sponsored Content
-            </span>
+            </Badge>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
               More from Our Partners
             </h2>
+            <Separator className="my-4 max-w-[60px] mx-auto bg-accent/40" />
           </ScrollReveal>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

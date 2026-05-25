@@ -61,13 +61,6 @@ export function ArticleCard({ title, category, image, readTime, date, excerpt, i
             Read Full Article
             <ArrowRight className="h-3 w-3 ml-1" />
           </span>
-          <div className="flex -space-x-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="w-6 h-6 rounded-full border-2 border-background bg-muted overflow-hidden">
-                <Image src={`https://i.pravatar.cc/100?u=${i + index}`} alt="Author" width={24} height={24} />
-              </div>
-            ))}
-          </div>
         </CardFooter>
       </Card>
     </motion.div>

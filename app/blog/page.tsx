@@ -16,6 +16,7 @@ import {
   ArrowRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -138,7 +139,7 @@ export default function BlogPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen" style={{ background: "linear-gradient(160deg, oklch(0.96 0.015 140) 0%, oklch(0.98 0.005 120) 50%, oklch(0.97 0.012 100) 100%)" }}>
       <Header />
 
       {/* Hero Section */}
@@ -170,7 +171,7 @@ export default function BlogPage() {
             </p>
 
             {/* Search Bar */}
-            <div className="max-w-xl mx-auto relative">
+            <form onSubmit={(e) => e.preventDefault()} className="max-w-xl mx-auto relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 placeholder="Search articles, tips, and discussions..."
@@ -178,13 +179,14 @@ export default function BlogPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
+            </form>
           </ScrollReveal>
         </div>
       </section>
 
       {/* Featured Posts */}
-      <section className="py-12">
+      <section className="py-12 relative">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(34,120,60,0.05) 0%, transparent 60%)" }} />
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <h2 className="font-serif text-2xl font-bold text-foreground mb-6">Featured Articles</h2>
@@ -254,7 +256,7 @@ export default function BlogPage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-12 bg-muted/30">
+      <section id="posts" className="py-12 relative" style={{ background: "linear-gradient(180deg, rgba(34,120,60,0.04) 0%, rgba(180,140,30,0.03) 100%)" }}>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Blog Posts */}
@@ -356,53 +358,58 @@ export default function BlogPage() {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* Write Article CTA */}
               <ScrollReveal>
-                <div className="bg-primary text-primary-foreground rounded-2xl p-6">
-                  <h3 className="font-serif text-lg font-bold mb-2">Share Your Knowledge</h3>
-                  <p className="text-primary-foreground/80 text-sm mb-4">
-                    Have farming tips or experiences to share? Write an article and help fellow farmers succeed.
-                  </p>
-                  <Button variant="secondary" className="w-full rounded-full">
-                    Write an Article
-                  </Button>
-                </div>
+                <Card className="bg-primary text-primary-foreground border-none">
+                  <CardContent className="p-6">
+                    <h3 className="font-serif text-lg font-bold mb-2">Share Your Knowledge</h3>
+                    <p className="text-primary-foreground/80 text-sm mb-4">
+                      Have farming tips or experiences to share? Write an article and help fellow farmers succeed.
+                    </p>
+                    <Button variant="secondary" className="w-full rounded-full">
+                      Write an Article
+                    </Button>
+                  </CardContent>
+                </Card>
               </ScrollReveal>
 
               {/* Trending Topics */}
               <ScrollReveal delay={0.1}>
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className="h-5 w-5 text-primary" />
-                    <h3 className="font-serif text-lg font-bold text-foreground">Trending Topics</h3>
-                  </div>
-                  <ul className="space-y-3">
-                    {trendingTopics.map((topic, index) => (
-                      <li key={index}>
-                        <Link href="#" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors">
-                          <span className="text-primary font-bold">{index + 1}</span>
-                          {topic}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Card className="bg-white/70 backdrop-blur-sm border-primary/10">
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <TrendingUp className="h-5 w-5 text-primary" />
+                      <h3 className="font-serif text-lg font-bold text-foreground">Trending Topics</h3>
+                    </div>
+                    <ul className="space-y-3">
+                      {trendingTopics.map((topic, index) => (
+                        <li key={index}>
+                          <Link href="#" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors">
+                            <span className="text-primary font-bold">{index + 1}</span>
+                            {topic}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
               </ScrollReveal>
 
               {/* Newsletter */}
               <ScrollReveal delay={0.2}>
-                <div className="bg-secondary/10 rounded-2xl p-6 border border-secondary/20">
-                  <h3 className="font-serif text-lg font-bold text-foreground mb-2">Weekly Digest</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Get the best farming tips delivered to your inbox every week.
-                  </p>
-                  <div className="space-y-3">
-                    <Input placeholder="Your email address" className="rounded-full" />
-                    <Button className="w-full rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
-                      Subscribe
-                    </Button>
-                  </div>
-                </div>
+                <Card className="border-secondary/20" style={{ background: "linear-gradient(135deg, rgba(180,140,30,0.08) 0%, rgba(34,120,60,0.05) 100%)" }}>
+                  <CardContent className="pt-6">
+                    <h3 className="font-serif text-lg font-bold text-foreground mb-2">Weekly Digest</h3>
+                    <p className="text-muted-foreground text-sm mb-4">
+                      Get the best farming tips delivered to your inbox every week.
+                    </p>
+                    <div className="space-y-3">
+                      <Input placeholder="Your email address" className="rounded-full" />
+                      <Button className="w-full rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                        Subscribe
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </ScrollReveal>
             </div>
           </div>

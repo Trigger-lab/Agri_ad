@@ -3,12 +3,9 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Megaphone,
-  Users,
-  Eye,
-  TrendingUp,
   Check,
   ArrowRight,
   Upload,
@@ -23,8 +20,19 @@ import {
   MessageSquare,
   ChevronDown,
   ChevronUp,
+  Target,
+  Users,
+  BarChart2,
+  Zap,
+  ShieldCheck,
+  Globe2,
+  BadgeCheck,
+  Handshake,
+  ChevronRight,
+  X,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
@@ -34,10 +42,63 @@ import { Footer } from "@/components/footer"
 import { AnimatedText, ScrollReveal } from "@/components/animated-text"
 import { AIAssistant } from "@/components/ai-assistant"
 
-const stats = [
-  { icon: Users, value: "15,000+", label: "Monthly Visitors" },
-  { icon: Eye, value: "250,000+", label: "Page Views" },
-  { icon: TrendingUp, value: "45%", label: "Avg. Engagement" },
+const advantages = [
+  {
+    icon: Target,
+    title: "Precision Audience Targeting",
+    description:
+      "Reach farmers, suppliers, and agribusinesses by region, crop type, and farming specialty. Your message lands where it matters most.",
+    color: "bg-emerald-500/10 text-emerald-600",
+  },
+  {
+    icon: Users,
+    title: "Zimbabwe's Largest Agri Community",
+    description:
+      "Connect with Zimbabwe's most active and engaged agricultural audience — from smallholder farmers to large commercial operations.",
+    color: "bg-blue-500/10 text-blue-600",
+  },
+  {
+    icon: BarChart2,
+    title: "Measurable ROI",
+    description:
+      "Receive monthly performance reports with detailed analytics. Understand exactly how your campaigns are performing and optimize accordingly.",
+    color: "bg-orange-500/10 text-orange-600",
+  },
+  {
+    icon: Zap,
+    title: "Fast Go-Live",
+    description:
+      "Your advertisement goes live within 24–48 hours of submitting materials and payment. Fast, simple, and hassle-free.",
+    color: "bg-yellow-500/10 text-yellow-600",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Trusted & Credible Platform",
+    description:
+      "Agri-Ad is a respected editorial voice in Zimbabwean agriculture. Advertising here builds brand authority and trust within the community.",
+    color: "bg-primary/10 text-primary",
+  },
+  {
+    icon: Globe2,
+    title: "Multi-Format Flexibility",
+    description:
+      "From banner ads and featured listings to video spots and sponsored articles — choose the format that best tells your brand story.",
+    color: "bg-purple-500/10 text-purple-600",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Quality Content Environment",
+    description:
+      "Your ads appear alongside premium editorial content — expert articles, market reports, and guides — elevating your brand perception.",
+    color: "bg-teal-500/10 text-teal-600",
+  },
+  {
+    icon: Handshake,
+    title: "Dedicated Support Team",
+    description:
+      "Our advertising specialists will guide you every step of the way — from creative advice to campaign planning and reporting.",
+    color: "bg-rose-500/10 text-rose-600",
+  },
 ]
 
 const adFormats = [
@@ -120,23 +181,28 @@ const adPlacements = [
 const faqs = [
   {
     question: "How long does it take for my ad to go live?",
-    answer: "Once we receive your payment and ad materials, your ad will be live within 24-48 hours. Rush processing is available for an additional fee.",
+    answer:
+      "Once we receive your payment and ad materials, your ad will be live within 24-48 hours. Rush processing is available for an additional fee.",
   },
   {
     question: "Can I change my ad content during the campaign?",
-    answer: "Yes, you can request up to 2 content changes per month at no extra cost. Additional changes may incur a small editing fee.",
+    answer:
+      "Yes, you can request up to 2 content changes per month at no extra cost. Additional changes may incur a small editing fee.",
   },
   {
     question: "What file formats do you accept?",
-    answer: "We accept JPG, PNG, GIF (for banners), and MP4 (for video ads). Maximum file size is 5MB for images and 50MB for videos.",
+    answer:
+      "We accept JPG, PNG, GIF (for banners), and MP4 (for video ads). Maximum file size is 5MB for images and 50MB for videos.",
   },
   {
     question: "Do you offer discounts for long-term campaigns?",
-    answer: "Yes! We offer 10% off for 3-month commitments and 20% off for 6-month or longer campaigns.",
+    answer:
+      "Yes! We offer 10% off for 3-month commitments and 20% off for 6-month or longer campaigns.",
   },
   {
     question: "Can I target specific audiences?",
-    answer: "Absolutely. We can target by region (Harare, Bulawayo, etc.), farming type (tobacco, livestock, crops), or equipment interests.",
+    answer:
+      "Absolutely. We can target by region (Harare, Bulawayo, etc.), farming type (tobacco, livestock, crops), or equipment interests.",
   },
 ]
 
@@ -153,12 +219,13 @@ export default function AdvertisePage() {
   const [selectedFormat, setSelectedFormat] = useState("featured")
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0)
   const [formStep, setFormStep] = useState(1)
+  const [showPricing, setShowPricing] = useState(false)
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen" style={{ background: "linear-gradient(160deg, oklch(0.96 0.015 140) 0%, oklch(0.98 0.005 120) 50%, oklch(0.97 0.012 100) 100%)" }}>
       <Header />
 
-      {/* Hero Section */}
+      {/* Hero Section — NO stats */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-primary/10 via-background to-secondary/10 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
@@ -185,204 +252,306 @@ export default function AdvertisePage() {
             <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
               <AnimatedText text="Advertise With Us" type="swash" />
             </h1>
-            <p className="text-muted-foreground text-lg mb-8">
-              Reach Zimbabwe&apos;s most engaged farming community. Connect with over 15,000 active farmers and agricultural businesses.
+            <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
+              Grow your agricultural business by reaching Zimbabwe's most engaged farming community. Premium placements, expert support, measurable results.
             </p>
-
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-6 md:gap-10">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <div className="flex items-center justify-center w-14 h-14 bg-primary/10 rounded-full mx-auto mb-3">
-                    <stat.icon className="h-7 w-7 text-primary" />
-                  </div>
-                  <span className="block text-2xl md:text-3xl font-bold text-foreground">{stat.value}</span>
-                  <span className="text-sm text-muted-foreground">{stat.label}</span>
-                </motion.div>
-              ))}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 px-8 font-bold shadow-xl"
+                onClick={() => {
+                  document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
+                }}
+              >
+                Start Advertising
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full px-8 font-bold border-primary/30 text-primary hover:bg-primary/5"
+                onClick={() => {
+                  setShowPricing(true)
+                  setTimeout(() => {
+                    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })
+                  }, 100)
+                }}
+              >
+                View Pricing
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Ad Formats Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <ScrollReveal className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-secondary/20 text-secondary-foreground rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
-              Ad Formats
+      {/* Advantages Section */}
+      <section id="advantages" className="py-24 relative">
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px]" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <ScrollReveal className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-secondary/20 text-secondary-foreground rounded-full text-xs font-black uppercase tracking-widest mb-4">
+              Why Advertise With Us
             </span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Choose Your Advertising Format
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+              <AnimatedText text="The Agri-Ad Advantage" type="wave" />
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Multiple options to suit your marketing goals and budget
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              When you advertise with Agri-Ad, you're not just buying ad space — you're partnering with Zimbabwe's most trusted agricultural platform.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {adFormats.map((format, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {advantages.map((adv, index) => (
               <motion.div
-                key={format.id}
-                className={`relative bg-card rounded-2xl p-6 border-2 transition-all cursor-pointer ${
-                  selectedFormat === format.id
-                    ? "border-primary shadow-xl"
-                    : "border-border hover:border-primary/50"
-                }`}
-                onClick={() => setSelectedFormat(format.id)}
+                key={adv.title}
+                className="group"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
+                transition={{ delay: index * 0.07 }}
+                whileHover={{ y: -6 }}
               >
-                {format.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
-                    Most Popular
-                  </span>
-                )}
-                <div className="flex items-center justify-center w-14 h-14 bg-primary/10 rounded-xl mb-4">
-                  <format.icon className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl font-bold text-foreground mb-2">{format.name}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{format.description}</p>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-primary">{format.price}</span>
-                  <span className="text-muted-foreground text-sm">/{format.period}</span>
-                </div>
-                <ul className="space-y-2">
-                  {format.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Check className="h-4 w-4 text-primary" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 pt-4 border-t border-border">
-                  <p className="text-xs text-muted-foreground">Sizes: {format.sizes.join(", ")}</p>
-                </div>
+                <Card className="bg-white/70 backdrop-blur-sm border-primary/10 hover:border-primary/30 hover:shadow-xl transition-all duration-300 h-full">
+                  <CardContent className="p-6">
+                    <div className={`w-12 h-12 rounded-xl ${adv.color} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                      <adv.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-serif text-lg font-bold text-foreground mb-2 leading-tight">
+                      {adv.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {adv.description}
+                    </p>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Ad Placements Preview */}
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <ScrollReveal className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
-              Ad Placements
-            </span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Where Your Ads Will Appear
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Strategic placements for maximum visibility and engagement
-            </p>
+          {/* Pricing Reveal CTA */}
+          <ScrollReveal className="text-center mt-16">
+            <Card className="inline-block border-primary/10 bg-white/75 backdrop-blur-sm rounded-3xl p-2 max-w-2xl mx-auto">
+              <CardContent className="px-8 py-10">
+                <h3 className="font-serif text-2xl font-bold text-foreground mb-3">
+                  Ready to see pricing?
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  We offer flexible packages to suit every budget — from startups to established agri-businesses. Click below to explore all formats, prices, and payment methods.
+                </p>
+                <Button
+                  id="pricing-btn"
+                  size="lg"
+                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-10 font-bold shadow-xl hover:scale-105 transition-all active:scale-95"
+                  onClick={() => {
+                    setShowPricing(true)
+                    setTimeout(() => {
+                      document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })
+                    }, 100)
+                  }}
+                >
+                  View Prices & Payment Methods
+                  <ChevronDown className="ml-2 h-5 w-5" />
+                </Button>
+              </CardContent>
+            </Card>
           </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {adPlacements.map((placement, index) => (
-              <motion.div
-                key={index}
-                className="bg-card rounded-xl overflow-hidden border border-border group"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="relative h-40 overflow-hidden">
-                  <Image
-                    src={placement.image}
-                    alt={placement.name}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-primary/60 flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-lg">YOUR AD HERE</span>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-foreground mb-1">{placement.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-2">{placement.position}</p>
-                  <span className="text-xs text-primary font-medium">{placement.traffic}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Terms & Conditions + Payment Methods */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Terms & Conditions */}
-            <ScrollReveal>
-              <div className="bg-card rounded-2xl p-8 border border-border h-full">
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Terms & Conditions</h3>
-                <ul className="space-y-4">
-                  {conditions.map((condition, index) => (
-                    <motion.li
-                      key={index}
-                      className="flex items-start gap-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
+      {/* Pricing & Payment Section — revealed on button click */}
+      <AnimatePresence>
+        {showPricing && (
+          <motion.div
+            id="pricing"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            {/* Ad Formats */}
+            <section className="py-16 bg-muted/30 border-y border-border/50">
+              <div className="container mx-auto px-4">
+                <ScrollReveal className="text-center mb-12">
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <span className="inline-block px-3 py-1 bg-secondary/20 text-secondary-foreground rounded-full text-xs font-semibold uppercase tracking-wider">
+                      Pricing
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground"
+                      onClick={() => setShowPricing(false)}
                     >
-                      <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{condition}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </ScrollReveal>
+                      <X className="h-4 w-4 mr-1" /> Hide
+                    </Button>
+                  </div>
+                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+                    Choose Your Advertising Format
+                  </h2>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    Multiple options to suit your marketing goals and budget
+                  </p>
+                </ScrollReveal>
 
-            {/* Payment Methods */}
-            <ScrollReveal delay={0.1}>
-              <div className="bg-card rounded-2xl p-8 border border-border h-full">
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Payment Methods</h3>
-                <div className="space-y-4">
-                  {paymentMethods.map((method, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                  {adFormats.map((format, index) => (
                     <motion.div
-                      key={index}
-                      className="flex items-center gap-4 p-4 bg-muted/50 rounded-xl"
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      key={format.id}
+                      className="group"
+                      onClick={() => setSelectedFormat(format.id)}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ y: -5 }}
                     >
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <method.icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">{method.name}</h4>
-                        <p className="text-sm text-muted-foreground">{method.description}</p>
-                      </div>
+                      <Card className={`relative bg-white/70 backdrop-blur-sm transition-all cursor-pointer h-full border-2 ${
+                        selectedFormat === format.id
+                          ? "border-primary shadow-xl scale-[1.02]"
+                          : "border-primary/10 hover:border-primary/50 shadow-sm"
+                      }`}>
+                        <CardContent className="pt-6">
+                          {format.popular && (
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
+                              Most Popular
+                            </span>
+                          )}
+                          <div className="flex items-center justify-center w-14 h-14 bg-primary/10 rounded-xl mb-4">
+                            <format.icon className="h-7 w-7 text-primary" />
+                          </div>
+                          <h3 className="font-serif text-xl font-bold text-foreground mb-2">{format.name}</h3>
+                          <p className="text-muted-foreground text-sm mb-4">{format.description}</p>
+                          <div className="mb-4">
+                            <span className="text-3xl font-bold text-primary">{format.price}</span>
+                            <span className="text-muted-foreground text-sm">/{format.period}</span>
+                          </div>
+                          <ul className="space-y-2">
+                            {format.features.map((feature, i) => (
+                              <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <Check className="h-4 w-4 text-primary" />
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="mt-4 pt-4 border-t border-primary/10">
+                            <p className="text-xs text-muted-foreground">Sizes: {format.sizes.join(", ")}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </motion.div>
                   ))}
                 </div>
-                <p className="mt-6 text-sm text-muted-foreground">
-                  All prices are in USD. Local currency equivalent accepted via EcoCash at prevailing rates.
-                </p>
+
+                {/* Payment Methods */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <ScrollReveal>
+                    <Card className="bg-white/70 backdrop-blur-sm border-primary/10 h-full">
+                      <CardContent className="p-8">
+                        <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Payment Methods</h3>
+                        <div className="space-y-4">
+                          {paymentMethods.map((method, index) => (
+                            <motion.div
+                              key={index}
+                              className="flex items-center gap-4 p-4 bg-primary/5 rounded-xl border border-primary/5 hover:border-primary/15 transition-all duration-300"
+                              initial={{ opacity: 0, x: 20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: index * 0.1 }}
+                              whileHover={{ scale: 1.02 }}
+                            >
+                              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <method.icon className="h-6 w-6 text-primary" />
+                              </div>
+                              <div>
+                                <h4 className="font-semibold text-foreground">{method.name}</h4>
+                                <p className="text-sm text-muted-foreground">{method.description}</p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                        <p className="mt-6 text-sm text-muted-foreground">
+                          All prices are in USD. Local currency equivalent accepted via EcoCash at prevailing rates.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </ScrollReveal>
+
+                  <ScrollReveal delay={0.1}>
+                    <Card className="bg-white/70 backdrop-blur-sm border-primary/10 h-full">
+                      <CardContent className="p-8">
+                        <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Terms & Conditions</h3>
+                        <ul className="space-y-4">
+                          {conditions.map((condition, index) => (
+                            <motion.li
+                              key={index}
+                              className="flex items-start gap-3"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: index * 0.1 }}
+                            >
+                              <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                              <span className="text-muted-foreground">{condition}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </ScrollReveal>
+                </div>
+
+                {/* Ad Placements */}
+                <ScrollReveal className="text-center mt-16 mb-12">
+                  <h2 className="font-serif text-3xl font-bold text-foreground mb-4">Where Your Ads Will Appear</h2>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    Strategic placements for maximum visibility and engagement
+                  </p>
+                </ScrollReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {adPlacements.map((placement, index) => (
+                    <motion.div
+                      key={index}
+                      className="group"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card className="bg-white/70 backdrop-blur-sm border-primary/10 hover:border-primary/30 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-full">
+                        <div className="relative h-40 overflow-hidden">
+                          <Image
+                            src={placement.image}
+                            alt={placement.name}
+                            fill
+                            className="object-cover transition-transform group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-primary/60 flex items-center justify-center">
+                            <span className="text-primary-foreground font-bold text-lg">YOUR AD HERE</span>
+                          </div>
+                        </div>
+                        <CardContent className="p-4">
+                          <h3 className="font-semibold text-foreground mb-1">{placement.name}</h3>
+                          <p className="text-sm text-muted-foreground mb-2">{placement.position}</p>
+                          <span className="text-xs text-primary font-medium">{placement.traffic}</span>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
+            </section>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Application Form */}
-      <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
+      <section id="apply" className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0">
           <motion.div
             className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"
@@ -398,9 +567,7 @@ export default function AdvertisePage() {
 
         <div className="container mx-auto px-4 relative z-10">
           <ScrollReveal className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-              Ready to Get Started?
-            </h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-primary-foreground/80 max-w-xl mx-auto">
               Fill out the form below and our team will get back to you within 24 hours
             </p>
@@ -418,18 +585,14 @@ export default function AdvertisePage() {
                 <div key={step} className="flex items-center">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-                      formStep >= step
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
+                      formStep >= step ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                     }`}
                   >
                     {step}
                   </div>
                   {step < 3 && (
                     <div
-                      className={`w-full h-1 mx-2 ${
-                        formStep > step ? "bg-primary" : "bg-muted"
-                      }`}
+                      className={`h-1 mx-2 ${formStep > step ? "bg-primary" : "bg-muted"}`}
                       style={{ width: "80px" }}
                     />
                   )}
@@ -439,11 +602,7 @@ export default function AdvertisePage() {
 
             {/* Step 1: Contact Info */}
             {formStep === 1 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                 <h3 className="font-serif text-xl font-bold mb-6">Contact Information</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -472,21 +631,21 @@ export default function AdvertisePage() {
 
             {/* Step 2: Ad Details */}
             {formStep === 2 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                 <h3 className="font-serif text-xl font-bold mb-6">Advertisement Details</h3>
                 <div className="space-y-4">
                   <div>
                     <Label>Select Ad Format</Label>
-                    <RadioGroup defaultValue={selectedFormat} className="mt-2 grid grid-cols-2 gap-3">
+                    <RadioGroup
+                      value={selectedFormat}
+                      onValueChange={setSelectedFormat}
+                      className="mt-2 grid grid-cols-2 gap-3"
+                    >
                       {adFormats.map((format) => (
                         <div key={format.id} className="flex items-center space-x-2">
                           <RadioGroupItem value={format.id} id={format.id} />
                           <Label htmlFor={format.id} className="cursor-pointer">
-                            {format.name} - {format.price}
+                            {format.name} — {format.price}
                           </Label>
                         </div>
                       ))}
@@ -506,11 +665,7 @@ export default function AdvertisePage() {
                   </div>
                   <div>
                     <Label htmlFor="description">What are you advertising?</Label>
-                    <Textarea
-                      id="description"
-                      placeholder="Describe your product or service..."
-                      className="mt-1"
-                    />
+                    <Textarea id="description" placeholder="Describe your product or service..." className="mt-1" />
                   </div>
                 </div>
               </motion.div>
@@ -518,23 +673,15 @@ export default function AdvertisePage() {
 
             {/* Step 3: Upload & Payment */}
             {formStep === 3 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                 <h3 className="font-serif text-xl font-bold mb-6">Upload & Payment</h3>
                 <div className="space-y-4">
                   <div>
                     <Label>Upload Ad Creative</Label>
                     <div className="mt-2 border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-primary transition-colors cursor-pointer">
                       <Upload className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-muted-foreground mb-2">
-                        Drag and drop your files here, or click to browse
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Accepted: JPG, PNG, GIF, MP4 (Max 50MB)
-                      </p>
+                      <p className="text-muted-foreground mb-2">Drag and drop your files here, or click to browse</p>
+                      <p className="text-xs text-muted-foreground">Accepted: JPG, PNG, GIF, MP4 (Max 50MB)</p>
                     </div>
                   </div>
                   <div>
@@ -632,9 +779,7 @@ export default function AdvertisePage() {
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <ScrollReveal className="text-center max-w-2xl mx-auto">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
-              Need Help Deciding?
-            </h2>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">Need Help Deciding?</h2>
             <p className="text-muted-foreground mb-6">
               Our advertising team is ready to help you create the perfect campaign for your business.
             </p>
