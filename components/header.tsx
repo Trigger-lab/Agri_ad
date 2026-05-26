@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
@@ -133,16 +134,14 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-              className="p-2 bg-primary rounded-full"
-            >
-              <Leaf className="h-5 w-5 text-primary-foreground" />
-            </motion.div>
-            <span className={`font-serif text-xl font-bold ${scrolled ? "text-foreground" : "text-white"}`}>
-              Mediaserv <span className="text-secondary">Advertising</span>
-            </span>
+            <Image
+              src="/mediaserv-logo.png"
+              alt="Mediaserv Advertising Logo"
+              width={160}
+              height={100}
+              className="h-10 md:h-12 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Leaf, Facebook, Twitter, Instagram, Youtube, Phone, Mail, MapPin } from "lucide-react"
 import { ScrollReveal } from "@/components/animated-text"
@@ -12,18 +13,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {/* Brand */}
           <ScrollReveal delay={0}>
-            <div className="flex items-center gap-2 mb-4">
-              <motion.div
-                className="p-2 bg-primary rounded-full"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Leaf className="h-5 w-5 text-primary-foreground" />
-              </motion.div>
-              <span className="font-serif text-xl font-bold">
-                Mediaserv <span className="text-secondary">Advertising</span>
-              </span>
-            </div>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/mediaserv-logo-white.png"
+                alt="Mediaserv Advertising Logo"
+                width={160}
+                height={100}
+                className="h-10 md:h-12 w-auto object-contain"
+              />
+            </Link>
             <p className="text-background/70 text-sm leading-relaxed mb-6">
               Zimbabwe&apos;s premier digital platform connecting farmers with suppliers, knowledge, and opportunities for agricultural success.
             </p>
