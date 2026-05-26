@@ -68,7 +68,7 @@ export function IssueReader({ isOpen, onClose, issue }: IssueReaderProps) {
                           <Image src={issue.cover} alt="Cover" fill className="object-cover" />
                           <div className="absolute inset-0 bg-black/20" />
                           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-10">
-                             <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl mb-4 leading-none">AGRI-AD</h1>
+                             <h1 className="text-4xl md:text-6xl font-black text-white drop-shadow-2xl mb-4 leading-none">MEDIASERV</h1>
                              <div className="w-20 h-1 bg-white mb-4" />
                              <p className="text-white font-sans font-bold tracking-[0.4em] uppercase text-sm">Quarterly Digest</p>
                           </div>
@@ -91,7 +91,7 @@ export function IssueReader({ isOpen, onClose, issue }: IssueReaderProps) {
                       )}
                     </div>
                     <footer className="flex items-center justify-between border-t border-black/10 pt-4 text-[10px] uppercase font-sans font-black tracking-widest text-black/30">
-                      <span>Agri-Ad Collective // Knowledge Center</span>
+                      <span>Mediaserv Collective // Knowledge Center</span>
                       <span>Vol. 12 Issue 04</span>
                     </footer>
                   </div>

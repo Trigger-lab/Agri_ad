@@ -5,7 +5,7 @@ import { PageLoader } from '@/components/page-loader'
 import { Suspense } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Agri-Ad Zimbabwe | Digital Farming Magazine & Marketplace',
+  title: 'Mediaserv Advertising | Digital Farming Magazine & Marketplace',
   description: 'Zimbabwe\'s premier agricultural advertising platform and digital magazine featuring farming tips, equipment, livestock, seeds, and agricultural solutions for modern farmers.',
   icons: {
     icon: [

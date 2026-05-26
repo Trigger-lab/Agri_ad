@@ -257,7 +257,7 @@ export function AIAssistant() {
                     )}
                   </Button>
                 </form>
-                <p className="text-[10px] text-muted-foreground text-center mt-2">
+                <p className="text-[10px] text-red-500 dark:text-red-400 font-semibold text-center mt-2">
                   AgriBot provides general guidance. Consult local experts for specific advice.
                 </p>
               </div>

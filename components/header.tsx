@@ -141,7 +141,7 @@ export function Header() {
               <Leaf className="h-5 w-5 text-primary-foreground" />
             </motion.div>
             <span className={`font-serif text-xl font-bold ${scrolled ? "text-foreground" : "text-white"}`}>
-              Agri-<span className="text-secondary">Ad</span>
+              Mediaserv <span className="text-secondary">Advertising</span>
             </span>
           </Link>
 
@@ -379,7 +379,7 @@ export function Header() {
               background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(240,250,242,0.98) 100%)",
             }}
           >
-            {/* Floating Agri-Ad Variables in Background */}
+            {/* Floating Mediaserv Variables in Background */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04] select-none">
               {bgVariables.map((v, i) => (
                 <motion.span

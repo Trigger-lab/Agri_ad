@@ -75,7 +75,7 @@ const advantages = [
     icon: ShieldCheck,
     title: "Trusted & Credible Platform",
     description:
-      "Agri-Ad is a respected editorial voice in Zimbabwean agriculture. Advertising here builds brand authority and trust within the community.",
+      "Mediaserv Advertising is a respected editorial voice in Zimbabwean agriculture. Advertising here builds brand authority and trust within the community.",
     color: "bg-primary/10 text-primary",
   },
   {
@@ -298,10 +298,10 @@ export default function AdvertisePage() {
               Why Advertise With Us
             </span>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
-              <AnimatedText text="The Agri-Ad Advantage" type="wave" />
+              <AnimatedText text="The Mediaserv Advantage" type="wave" />
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              When you advertise with Agri-Ad, you're not just buying ad space — you're partnering with Zimbabwe's most trusted agricultural platform.
+              When you advertise with Mediaserv Advertising, you're not just buying ad space — you're partnering with Zimbabwe's most trusted agricultural platform.
             </p>
           </ScrollReveal>
 

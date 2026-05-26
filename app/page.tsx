@@ -832,14 +832,14 @@ export default function HomePage() {
                       We believe in the power of modern technology to transform traditional wisdom into global success. Through precision irrigation, certified crop science, and sustainable mechanics, we are empowering every farmer to become a leader of the new green revolution.
                     </p>
                     <p>
-                      Agri-Ad is committed to bridging the gap between those who produce and those who provide. Together, we are not just growing crops; we are building a resilient, food-secure nation for generations to come.
+                      Mediaserv Advertising is committed to bridging the gap between those who produce and those who provide. Together, we are not just growing crops; we are building a resilient, food-secure nation for generations to come.
                     </p>
                   </div>
 
                   <footer className="pt-12 text-center">
                     <div className="inline-block text-left">
                       <p className="font-sans text-[10px] uppercase tracking-widest text-[#8d8a7e] mb-1">Authenticated by</p>
-                      <p className="font-serif text-2xl text-primary font-bold italic rotate-[-2deg]">The Agri-Ad Collective</p>
+                      <p className="font-serif text-2xl text-primary font-bold italic rotate-[-2deg]">The Mediaserv Collective</p>
                     </div>
                   </footer>
                 </div>

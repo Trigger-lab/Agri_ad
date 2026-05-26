@@ -21,7 +21,7 @@ export function Footer() {
                 <Leaf className="h-5 w-5 text-primary-foreground" />
               </motion.div>
               <span className="font-serif text-xl font-bold">
-                Agri-<span className="text-secondary">Ad</span>
+                Mediaserv <span className="text-secondary">Advertising</span>
               </span>
             </div>
             <p className="text-background/70 text-sm leading-relaxed mb-6">
@@ -112,7 +112,7 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p>&copy; 2026 Agri-Ad Zimbabwe. All rights reserved.</p>
+          <p>&copy; 2026 Mediaserv Advertising. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-background transition-colors">
               Privacy Policy
