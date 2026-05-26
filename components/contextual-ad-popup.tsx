@@ -115,9 +115,9 @@ export function ContextualAdPopup() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 100, scale: 0.95 }}
             transition={{ type: "spring", damping: 20, stiffness: 100 }}
-            className="w-[280px] sm:w-[380px] bg-card/95 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden shadow-2xl pointer-events-auto"
+            className="w-[240px] sm:w-[340px] bg-card/95 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden shadow-2xl pointer-events-auto"
           >
-            <div className="relative h-24 sm:h-40">
+            <div className="relative h-20 sm:h-36">
               <Image
                 src={currentAd.image}
                 alt={currentAd.title}
@@ -129,30 +129,30 @@ export function ContextualAdPopup() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-7 w-7 rounded-full bg-black/20 hover:bg-black/40 text-white border border-white/20 backdrop-blur-md"
+                  className="h-6 w-6 rounded-full bg-black/20 hover:bg-black/40 text-white border border-white/20 backdrop-blur-md"
                   onClick={handleDismiss}
                 >
                   <X className="h-3 w-3" />
                 </Button>
               </div>
-              <div className="absolute bottom-2 left-3 sm:bottom-3 sm:left-4 z-10">
-                <Badge className={`${currentAd.color} text-white border-none px-2 py-0.5 text-[10px] font-semibold shadow-lg`}>
+              <div className="absolute bottom-2 left-2.5 sm:bottom-3 sm:left-4 z-10">
+                <Badge className={`${currentAd.color} text-white border-none px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold shadow-lg`}>
                   <currentAd.icon className="h-2.5 w-2.5 mr-1" />
                   {currentAd.category}
                 </Badge>
               </div>
             </div>
 
-            <div className="p-3 sm:p-5">
-              <h3 className="font-serif text-base sm:text-xl font-bold text-foreground mb-1 leading-tight">
+            <div className="p-2.5 sm:p-4">
+              <h3 className="font-serif text-sm sm:text-lg font-bold text-foreground mb-1 leading-tight line-clamp-1 sm:line-clamp-2">
                 {currentAd.title}
               </h3>
-              <p className="text-muted-foreground text-[11px] sm:text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2">
+              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed mb-2.5 sm:mb-3 line-clamp-2">
                 {currentAd.description}
               </p>
 
               <div className="flex gap-2">
-                <Button className="rounded-full flex-1 h-8 sm:h-9 text-[11px] sm:text-xs font-semibold group relative overflow-hidden bg-primary hover:bg-primary/90 transition-all hover:shadow-lg" asChild>
+                <Button className="rounded-full flex-1 h-7 sm:h-9 text-[10px] sm:text-xs font-semibold group relative overflow-hidden bg-primary hover:bg-primary/90 transition-all hover:shadow-lg" asChild>
                   <Link href={currentAd.link}>
                     <span className="relative z-10 flex items-center justify-center">
                       {currentAd.cta}
@@ -160,7 +160,7 @@ export function ContextualAdPopup() {
                     </span>
                   </Link>
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-full h-8 sm:h-9 text-[10px] border-border/50 bg-white/5 hover:bg-white/10 transition-colors" asChild>
+                <Button variant="outline" size="sm" className="rounded-full h-7 sm:h-9 text-[9px] sm:text-[10px] border-border/50 bg-white/5 hover:bg-white/10 transition-colors" asChild>
                   <Link href="/advertise">
                     Ads
                   </Link>
@@ -168,7 +168,7 @@ export function ContextualAdPopup() {
               </div>
             </div>
             
-            <div className="bg-muted/30 px-3 sm:px-5 py-1.5 sm:py-2 flex items-center justify-between border-t border-border/10">
+            <div className="bg-muted/30 px-2.5 sm:px-4 py-1 sm:py-1.5 flex items-center justify-between border-t border-border/10">
               <span className="text-[8px] uppercase tracking-widest text-muted-foreground font-semibold">Sponsored</span>
               <span className="flex items-center gap-1 text-[8px] text-muted-foreground hover:text-primary cursor-pointer transition-colors">
                 Info <ExternalLink className="h-2 w-2" />
