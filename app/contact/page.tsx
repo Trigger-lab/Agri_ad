@@ -145,53 +145,77 @@ export default function ContactPage() {
           <ScrollReveal className="text-center mb-8">
             <h2 className="font-serif text-2xl font-bold text-foreground">Find Us</h2>
           </ScrollReveal>
-          <Card className="overflow-hidden border-primary/15 shadow-xl bg-white/70 backdrop-blur-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-5 min-h-[450px]">
+          <Card className="overflow-hidden border border-emerald-500/10 shadow-[0_20px_50px_rgba(22,101,52,0.08)] bg-white/70 backdrop-blur-md rounded-[2.5rem]">
+            <div className="grid grid-cols-1 lg:grid-cols-5 min-h-[500px]">
               {/* Directions Panel */}
-              <div className="p-8 lg:col-span-2 flex flex-col justify-between bg-gradient-to-br from-white/90 to-primary/5">
-                <div className="space-y-6">
-                  <div className="inline-flex p-3 bg-primary/10 rounded-2xl border border-primary/20 text-primary">
-                    <Compass className="h-6 w-6 animate-pulse" />
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-2xl font-bold text-foreground mb-2">Visit Our Office</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      We are situated in the quiet, accessible suburb of Bluffhill in Harare. Drop by for a cup of coffee and discuss how we can elevate your advertising ROI.
-                    </p>
+              <div className="p-8 lg:p-10 lg:col-span-2 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-white via-white/80 to-emerald-50/20">
+                {/* Subtle top decoration glow */}
+                <div className="absolute -top-16 -left-16 w-32 h-32 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none" />
+                
+                <div className="space-y-8 relative z-10">
+                  <div className="flex items-center gap-3">
+                    <div className="flex p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-800 shadow-inner">
+                      <Compass className="h-6 w-6 animate-[spin_10s_linear_infinite]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-emerald-700">HQ Location</span>
+                      <h3 className="font-serif text-2xl font-black text-foreground leading-none mt-1">Visit Our Office</h3>
+                    </div>
                   </div>
                   
-                  <div className="space-y-4 pt-2">
-                    <div className="flex items-start gap-3">
-                      <div className="mt-1 p-1.5 bg-primary/5 rounded-lg border border-primary/10">
-                        <MapPin className="h-4 w-4 text-primary" />
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Come visit us at our offices in Bluffhill. We're always happy to have a conversation, share a coffee, and build strategies together.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    {/* Address Detail Card */}
+                    <div className="flex items-start gap-4 p-4 rounded-2xl bg-emerald-50/30 border border-emerald-100/50 hover:bg-emerald-50/50 transition-all duration-300">
+                      <div className="p-2 bg-white rounded-xl shadow-sm text-emerald-700">
+                        <MapPin className="h-4 w-4" />
                       </div>
                       <div>
-                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Office Address</p>
-                        <p className="text-sm font-medium text-foreground">40 St Athana Rd, Bluffhill</p>
-                        <p className="text-sm font-medium text-foreground">Harare, Zimbabwe</p>
+                        <p className="text-[10px] font-bold text-emerald-800/60 uppercase tracking-wider">Address</p>
+                        <p className="text-sm font-semibold text-foreground mt-0.5">40 St Athana Rd, Bluffhill</p>
+                        <p className="text-xs text-muted-foreground">Harare, Zimbabwe</p>
+                      </div>
+                    </div>
+                    
+                    {/* Status / Working Hours Card */}
+                    <div className="flex items-start gap-4 p-4 rounded-2xl bg-emerald-50/30 border border-emerald-100/50 hover:bg-emerald-50/50 transition-all duration-300">
+                      <div className="p-2 bg-white rounded-xl shadow-sm text-emerald-700">
+                        <Clock className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold text-emerald-800/60 uppercase tracking-wider">Working Hours</p>
+                        <p className="text-sm font-semibold text-foreground mt-0.5">Mon - Fri: 8:00 AM - 5:00 PM</p>
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="text-[10px] font-medium text-emerald-700">Location Verified</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-8">
+                <div className="pt-8 relative z-10">
                   <a 
                     href="https://www.google.com/maps/dir/?api=1&destination=40+St+Athana+Rd+Bluffhill+Harare+Zimbabwe" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 bg-primary text-primary-foreground hover:bg-primary/95 px-6 py-3.5 rounded-full font-bold text-sm shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200"
+                    className="group flex w-full items-center justify-center gap-3 bg-gradient-to-r from-emerald-600 via-primary to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-primary-foreground px-6 py-4 rounded-2xl font-bold text-sm shadow-[0_10px_20px_rgba(22,101,52,0.15)] hover:shadow-[0_15px_30px_rgba(22,101,52,0.25)] transition-all duration-300 hover:-translate-y-1"
                   >
-                    <Compass className="h-4 w-4" />
-                    Track Live Route & Navigate
+                    <Compass className="h-5 w-5 transition-transform group-hover:rotate-45 duration-300" />
+                    <span>Track Live Route & Navigate</span>
                   </a>
-                  <p className="text-[10px] text-muted-foreground text-center mt-2 font-medium">
-                    Calculates real-time GPS routing from your current location
+                  <p className="text-[10px] text-muted-foreground/80 text-center mt-2.5 font-medium">
+                    Integrates with Google Maps for real-time turn-by-turn directions
                   </p>
                 </div>
               </div>
 
               {/* Interactive Iframe Map */}
-              <div className="lg:col-span-3 h-[350px] lg:h-auto relative border-t lg:border-t-0 lg:border-l border-primary/10">
+              <div className="lg:col-span-3 h-[400px] lg:h-auto relative border-t lg:border-t-0 lg:border-l border-emerald-100 overflow-hidden group">
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-10 pointer-events-none transition-opacity duration-500 z-10" />
                 <iframe 
                   src="https://maps.google.com/maps?q=40%20St%20Athana%20Rd%20Bluffhill%20Harare%20Zimbabwe&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%" 
@@ -200,7 +224,7 @@ export default function ContactPage() {
                   allowFullScreen 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full min-h-[350px] lg:min-h-full"
+                  className="w-full h-full min-h-[400px] lg:min-h-full transition-transform duration-700 group-hover:scale-[1.01]"
                 />
               </div>
             </div>
