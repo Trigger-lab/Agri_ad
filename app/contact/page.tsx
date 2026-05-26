@@ -78,12 +78,12 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
-            <ScrollReveal>
+            <ScrollReveal className="flex flex-col h-full">
               <h2 className="font-serif text-2xl font-bold text-foreground mb-8">Contact Information</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 flex-1">
                 {contactInfo.map((info, index) => (
-                  <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
-                    <Card className="h-full border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white/70 backdrop-blur-sm">
+                  <motion.div key={index} className="h-full" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
+                    <Card className="h-full border-primary/10 hover:border-primary/20 hover:shadow-lg transition-all duration-300 bg-white/70 backdrop-blur-sm rounded-2xl">
                       <CardContent className="pt-6">
                         <div className={`w-12 h-12 ${info.color} rounded-full flex items-center justify-center mb-4`}>
                           <info.icon className="h-6 w-6" />
@@ -100,13 +100,10 @@ export default function ContactPage() {
             </ScrollReveal>
 
             {/* Contact Form */}
-            <ScrollReveal delay={0.2}>
-              <Card className="border-primary/15 shadow-xl bg-white/80 backdrop-blur-md">
-                <CardHeader>
-                  <CardTitle className="font-serif text-2xl">Send Us a Message</CardTitle>
-                  <Separator className="mt-2 bg-primary/10" />
-                </CardHeader>
-                <CardContent>
+            <ScrollReveal delay={0.2} className="flex flex-col h-full">
+              <h2 className="font-serif text-2xl font-bold text-foreground mb-8">Send Us a Message</h2>
+              <Card className="flex-1 border-primary/10 hover:border-primary/20 hover:shadow-lg transition-all duration-300 bg-white/70 backdrop-blur-sm rounded-2xl">
+                <CardContent className="pt-6">
                   <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
