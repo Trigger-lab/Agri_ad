@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Clock, Send, Leaf } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, Send, Leaf, Compass } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -138,25 +138,71 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Placeholder */}
+      {/* Interactive Map & GPS Navigation */}
       <section className="py-16 relative overflow-hidden">
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, rgba(34,120,60,0.05) 50%, transparent)" }} />
         <div className="container mx-auto px-4 relative z-10">
           <ScrollReveal className="text-center mb-8">
             <h2 className="font-serif text-2xl font-bold text-foreground">Find Us</h2>
           </ScrollReveal>
-          <Card className="overflow-hidden border-primary/15 shadow-lg">
-            <div className="h-96 relative flex items-center justify-center" style={{ background: "linear-gradient(135deg, rgba(34,120,60,0.06) 0%, rgba(180,140,30,0.04) 100%)" }}>
-              {/* Decorative grid */}
-              <div className="absolute inset-0" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23166534' stroke-opacity='0.06' stroke-width='1'%3E%3Crect x='0' y='0' width='60' height='60'/%3E%3C/g%3E%3C/svg%3E")` }} />
-              <motion.div className="text-center relative z-10" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/20">
-                  <MapPin className="h-10 w-10 text-primary" />
+          <Card className="overflow-hidden border-primary/15 shadow-xl bg-white/70 backdrop-blur-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-5 min-h-[450px]">
+              {/* Directions Panel */}
+              <div className="p-8 lg:col-span-2 flex flex-col justify-between bg-gradient-to-br from-white/90 to-primary/5">
+                <div className="space-y-6">
+                  <div className="inline-flex p-3 bg-primary/10 rounded-2xl border border-primary/20 text-primary">
+                    <Compass className="h-6 w-6 animate-pulse" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold text-foreground mb-2">Visit Our Office</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      We are situated in the quiet, accessible suburb of Bluffhill in Harare. Drop by for a cup of coffee and discuss how we can elevate your advertising ROI.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 p-1.5 bg-primary/5 rounded-lg border border-primary/10">
+                        <MapPin className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Office Address</p>
+                        <p className="text-sm font-medium text-foreground">40 St Athana Rd, Bluffhill</p>
+                        <p className="text-sm font-medium text-foreground">Harare, Zimbabwe</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p className="font-semibold text-foreground">Mediaserv Advertising</p>
-                <p className="text-sm text-muted-foreground">40 St Athana Rd Bluffhill, Harare, Zimbabwe</p>
-                <Badge variant="outline" className="mt-3 border-primary/30 text-primary">Find us on Google Maps</Badge>
-              </motion.div>
+
+                <div className="pt-8">
+                  <a 
+                    href="https://www.google.com/maps/dir/?api=1&destination=40+St+Athana+Rd+Bluffhill+Harare+Zimbabwe" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center gap-2 bg-primary text-primary-foreground hover:bg-primary/95 px-6 py-3.5 rounded-full font-bold text-sm shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200"
+                  >
+                    <Compass className="h-4 w-4" />
+                    Track Live Route & Navigate
+                  </a>
+                  <p className="text-[10px] text-muted-foreground text-center mt-2 font-medium">
+                    Calculates real-time GPS routing from your current location
+                  </p>
+                </div>
+              </div>
+
+              {/* Interactive Iframe Map */}
+              <div className="lg:col-span-3 h-[350px] lg:h-auto relative border-t lg:border-t-0 lg:border-l border-primary/10">
+                <iframe 
+                  src="https://maps.google.com/maps?q=40%20St%20Athana%20Rd%20Bluffhill%20Harare%20Zimbabwe&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full min-h-[350px] lg:min-h-full"
+                />
+              </div>
             </div>
           </Card>
         </div>
